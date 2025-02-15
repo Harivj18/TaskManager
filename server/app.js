@@ -14,7 +14,7 @@ const port = process.env.PORT || 8100;
 app.use(bodyparser.json({limit: '15mb'}))
 app.use(cookies())
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.CLIENT_URL],
     credentials: true
 }));
 
