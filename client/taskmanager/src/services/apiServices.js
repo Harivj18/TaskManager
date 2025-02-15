@@ -6,6 +6,10 @@ const ApiRequest = async (method, endpoint, data = {}, params = {}) => {
             let apiURL = process.env.REACT_APP_SERVER_URL || "http://localhost:8080/taskManager";
 
             axios.defaults.withCredentials = true;
+
+            console.log('`${apiURL}/${endpoint}`',`${apiURL}/${endpoint}`);
+            
+
             const response = await axios({
                 method,
                 url: `${apiURL}/${endpoint}`,
