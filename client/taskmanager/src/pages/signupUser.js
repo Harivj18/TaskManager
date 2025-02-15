@@ -68,7 +68,7 @@ const Signup = () => {
     } else if (userResponse?.message?.toLowerCase().includes("username already exists")) {
       toast.error(
         <div>
-          username already exists! <a href="/login" className="text-blue-500 underline">Login here</a>
+          Username / Email / Mobile already Registered! <a href="/login" className="text-blue-500 underline">Login here</a>
         </div>,
         {
           position: "top-center",
