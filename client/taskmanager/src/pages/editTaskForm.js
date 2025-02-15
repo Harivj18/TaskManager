@@ -48,7 +48,7 @@ function EditTaskForm() {
 
         setError(""); // Clear error if validation passes
         if (error === "") {
-            const updateTask = await ApiRequest("POST", 'dashboard/updateTask', taskInfo)
+            const updateTask = await ApiRequest("POST", 'taskManager/dashboard/updateTask', taskInfo)
             if (updateTask['status'].toUpperCase() === "SUCCESS") {
 
                 toast.success("Task Added Successfully !!", {

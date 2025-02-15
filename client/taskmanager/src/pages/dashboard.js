@@ -24,7 +24,7 @@ function Dashboard() {
   }, [darkMode]);
 
   const handleLogout = async () => {
-    const userLogout = await ApiRequest("POST", "user/logout");
+    const userLogout = await ApiRequest("POST", "taskManager/user/logout");
     if (userLogout.status.toUpperCase() === "SUCCESS") {
       localStorage.removeItem("theme");
       localStorage.removeItem("userName");
@@ -34,10 +34,10 @@ function Dashboard() {
 
   const searchTask = async () => {
     if (search.taskNo !== "") {
-      const searchResult = await ApiRequest("GET", `dashboard/getTask/${search.taskNo}`);
+      const searchResult = await ApiRequest("GET", `taskManager/dashboard/getTask/${search.taskNo}`);
       setSearchResult([searchResult.data]);
     } else {
-      const searchResult = await ApiRequest("GET", `dashboard/allTask`);
+      const searchResult = await ApiRequest("GET", `taskManager/taskManager/dashboard/allTask`);
       setSearchResult(searchResult.data);
     }
   };
@@ -48,7 +48,7 @@ function Dashboard() {
   };
 
   const AIsuggestion = async () => {
-    const response = await ApiRequest('POST', `dashboard/getAISuggestion`);
+    const response = await ApiRequest('POST', `taskManager/dashboard/getAISuggestion`);
     if (response.status.toUpperCase() === "SUCCESS") {
       setAiSuggestion(response.data);
     }
@@ -126,7 +126,7 @@ function Dashboard() {
           )}
 
           {/* Chat Button */}
-          
+
           <button
             onClick={() => setShowChatPopup(!showChatPopup)}
             className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition relative"

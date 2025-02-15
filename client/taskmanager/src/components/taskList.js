@@ -12,7 +12,7 @@ function TaskList({ filter, searchResult }) {
       setTaskInfo(searchResult);
     } else {
       const fetchTask = async () => {
-        const allTask = await ApiRequest("GET", "dashboard/allTask");
+        const allTask = await ApiRequest("GET", "taskManager/dashboard/allTask");
         if (allTask.status.toUpperCase() === "SUCCESS") {
           setTaskInfo(allTask.data);
         }

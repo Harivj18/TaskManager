@@ -7,7 +7,8 @@ export const AuthProvider = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true); // New loading state
 
-    const authUrl = "http://localhost:8080/taskManager/protectedRoutes/authCheck";
+    // const authUrl = "http://localhost:8080/taskManager/protectedRoutes/authCheck";
+    const authUrl = "https://task-manager-ui-eight.vercel.app/taskManager/protectedRoutes/authCheck";
 
 
     useEffect(() => {

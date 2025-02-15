@@ -11,7 +11,7 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
   const [isImportant, setIsImportant] = useState(isImportantTask);
 
   const importantTask = async () => {
-    const markImportant = await ApiRequest("POST", "dashboard/importantTask", {
+    const markImportant = await ApiRequest("POST", "taskManager/dashboard/importantTask", {
       isImportant: !isImportantTask,
       taskNo,
     });
@@ -22,7 +22,7 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
   };
 
   const onDeleteTask = async () => {
-    await ApiRequest("POST", "dashboard/deleteTask", { taskNo });
+    await ApiRequest("POST", "taskManager/dashboard/deleteTask", { taskNo });
     setTimeout(() => window.location.reload(), 3000);
   };
 

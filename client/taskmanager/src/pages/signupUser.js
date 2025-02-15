@@ -56,7 +56,7 @@ const Signup = () => {
     e.preventDefault();
     if (!validateForm()) return;
 
-    const userResponse = await ApiRequest("POST", "user/signup", userInfo);
+    const userResponse = await ApiRequest("POST", "taskManager/user/signup", userInfo);
     if (userResponse?.status?.toUpperCase() === "SUCCESS") {
       setTimeout(() => navigate("/login"), 1500);
     }
@@ -68,7 +68,7 @@ const Signup = () => {
         <h2 className="text-3xl font-bold text-center text-blue-600">Sign Up</h2>
         <form onSubmit={registerNewUser} className="mt-6 space-y-5">
           {/* Username */}
-          
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Username</label>
             <input

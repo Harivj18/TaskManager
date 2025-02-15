@@ -38,7 +38,7 @@ function AddTaskForm() {
     setError(""); // Clear error if validation passes
     if (error === "") {
 
-      const addNewTask = await ApiRequest("POST", 'dashboard/addTask', taskInfo)
+      const addNewTask = await ApiRequest("POST", 'taskManager/dashboard/addTask', taskInfo)
       if (addNewTask['status'].toUpperCase() === "SUCCESS") {
 
         toast.success("Task Added Successfully !!", {

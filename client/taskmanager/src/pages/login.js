@@ -47,7 +47,7 @@ const Login = () => {
     if (!validateForm()) return;
 
     setLoading(true);
-    const userLoginInfo = await ApiRequest("POST", "user/login", userInfo);
+    const userLoginInfo = await ApiRequest("POST", "taskManager/user/login", userInfo);
 
     if (userLoginInfo.status.toUpperCase() === "SUCCESS") {
       setIsAuthenticated(true);
