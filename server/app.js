@@ -19,7 +19,11 @@ console.log('process.env.CLIENT_URL2',process.env.CLIENT_URL2);
 console.log('process.env.CLIENT_URL3',process.env.CLIENT_URL3);
 
 app.use(cors({
-    origin: [process.env.CLIENT_URL1, process.env.CLIENT_URL2, process.env.CLIENT_URL3 ],
+    origin: [
+        "https://task-manager-ui-eight.vercel.app",
+        "https://task-manager-qegtyr7ze-harivj18s-projects.vercel.app",
+        "https://task-manager-ui-git-main-harivj18s-projects.vercel.app"
+    ],
     credentials: true
 }));
 app.use(bodyparser.json({limit: '15mb'}))
