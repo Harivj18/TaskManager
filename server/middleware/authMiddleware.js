@@ -7,7 +7,9 @@ const users = require('../models/userModel')
 const routesAuthentication = async (req, res, next) => { 
     try {
         const sessionToken = req.cookies.sessionToken;
-
+        console.log('sessionTokensessionToken',sessionToken);
+        console.log('req.cookies',req.cookies);
+        
         if (!sessionToken) {
             return res.status(200).send({
                 "status": "Failed",
