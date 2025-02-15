@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.float-right{
+    float: right;
+  }
+  .float-left{
+    float: left;
+  }
+  .inline-block{
+    display: inline-block;
+  }
+  .flex{
+    display: flex;
+  }
+  .font_12{
+    font-size: 12px;
+  
+  }
+  .font_14{
+    font-size: 14px;
+  }
+  .center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pad-10{
+    padding: 10px;
+  }
+  .cur{
+    cursor: pointer;
+  }
+  .textCenter{
+    text-align: center;
+  }
+  .bmar-20{
+    margin-bottom: 20px;
+  }
+  .tmar-10{
+    margin-top: 10px;
+  }
+  .lmar-10{
+    margin-left: 10px;
+  }

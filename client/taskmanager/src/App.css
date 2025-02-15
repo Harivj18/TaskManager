@@ -1,0 +1,10 @@
+body{
+    background-color: #e3e6f0;
+  }
+  .cardParent{
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding: 15px;
+    border-radius: 4px;
+  }
+  
