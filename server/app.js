@@ -10,6 +10,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes')
 dotenv.config({path: './config/.env'})
 const port = process.env.PORT || 8100;
 
+connectMongo()
 
 app.use(express.json())
 app.use(cookies())
@@ -43,5 +44,4 @@ app.listen(port, (err) => {
         throw err
     }
     console.log(`app.js => Server is listening on the PORT: ${port}`);
-    connectMongo()
 })
