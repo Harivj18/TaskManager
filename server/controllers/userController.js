@@ -4,7 +4,6 @@ const setJWTCookie = require('../utils/generateToken')
 
 const userRegistration = async(req, res) => {
     try {
-        console.log('User registration');
         let {
             userName,
             firstName,
@@ -16,7 +15,7 @@ const userRegistration = async(req, res) => {
         } = req.body;
 
         if (password !== confirm_password) {
-            return res.status(500).send({
+            return res.status(200).send({
                 "status": "Failed",
                 "message": "Password Mismatched, Kindly Check it"
             })
@@ -25,13 +24,12 @@ const userRegistration = async(req, res) => {
         const isUserExists = await users.findOne({userName})
 
         if (isUserExists) {
-            return res.status(500).send({
+            return res.status(200).send({
                 "status": "Failed",
                 "message": "UserName Already Exists"
             })
         }
 
-        console.log('process.env.GEN_SALT',process.env.GEN_SALT);
         
         const genSalt = await bcrypt.genSalt(Number(process.env.GEN_SALT));
         const hashPassword = await bcrypt.hash(password, genSalt);
@@ -61,7 +59,7 @@ const userRegistration = async(req, res) => {
         })
     } catch (error) {
         console.log('userController.js : userRegistration => Error while registering New User',error);
-        return res.status(500).send({
+        return res.status(200).send({
             "status": "Failed",
             "message": "Error while creating new User"
         })
@@ -70,41 +68,57 @@ const userRegistration = async(req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        console.log('Login User');
         let {
-            userName,
+            emailId,
             password
         } = req.body;
 
-        const getUserInfo = await users.findOne({userName});
+        const getUserInfo = await users.findOne({emailId});
 
         if (getUserInfo) {
             const decryptPassword = await bcrypt.compare(password, getUserInfo.password);
             if (decryptPassword) {
-                await setJWTCookie(userName, res);
+                await setJWTCookie(getUserInfo.userName, res);
                 
                 return res.status(200).send({
                     "status": "Success",
-                    "message": "User Login Verified"
+                    "message": "User Login Verified",
+                    "userName": getUserInfo.userName
                 })
             } else {
-                return res.status(401).send({
+                return res.status(200).send({
                     "status": "Failed",
                     "message": "Invalid Password"
                 })
             }
         }
-        return res.status(500).send({
+        return res.status(200).send({
             "status": "Failed",
             "message": "Invalid Username / User does not exist"
         })
     } catch (error) {
         console.log('userController.js : loginUser => Error while login user',error);
-        return res.status(500).send({
+        return res.status(200).send({
             "status": "Failed",
             "message": "Issue on User Login"
         })
     }
 }
 
-module.exports = {userRegistration, loginUser}
+const userLogout = (req, res) => {
+    try {
+        res.cookie('sessionToken', "", {maxAge: 0});
+        return res.status(200).send({
+            "status": "Success",
+            "message": "User Logout Successfully"
+        })
+    } catch (error) {
+        console.log('userController.js : userLogout => Error while logout user session',error);
+        return res.status(200).send({
+            "status": "Failed",
+            "message": "Unable to Logout User"
+        })
+    }
+}
+
+module.exports = {userRegistration, loginUser, userLogout}

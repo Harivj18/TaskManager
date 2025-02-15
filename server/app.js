@@ -9,15 +9,17 @@ const userRoutes = require('./routes/userRoutes')
 const dashboardRoutes = require('./routes/dashboardRoutes')
 dotenv.config({path: './config/.env'})
 const port = process.env.PORT || 8100;
-console.log('process.env.PORT',process.env.PORT);
 
 
 app.use(bodyparser.json({limit: '15mb'}))
 app.use(cookies())
 app.use(cors({
-    origin: [],
+    origin: ["http://localhost:3000"],
     credentials: true
 }));
+
+
+app.use('/taskManager/protectedRoutes',userRoutes)
 app.use('/taskManager/user', userRoutes);
 app.use('/taskManager/dashboard', dashboardRoutes);
 
