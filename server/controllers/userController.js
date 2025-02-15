@@ -1,5 +1,5 @@
 const users = require('../models/userModel');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 const setJWTCookie = require('../utils/generateToken')
 
 const userRegistration = async(req, res) => {
@@ -83,7 +83,10 @@ const loginUser = async (req, res) => {
                 return res.status(200).send({
                     "status": "Success",
                     "message": "User Login Verified",
-                    "userName": getUserInfo.userName
+                    "userInfo": {
+                        "userName": getUserInfo.userName,
+                        "userId": getUserInfo.userId,
+                    }
                 })
             } else {
                 return res.status(200).send({

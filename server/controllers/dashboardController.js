@@ -9,6 +9,7 @@ const createTask = async (req, res) => {
             dueDate,
             priority,
             status,
+            userId
         } = req.body;
 
 
@@ -19,7 +20,8 @@ const createTask = async (req, res) => {
                 taskDescription,
                 dueDate,
                 priority,
-                status
+                status,
+                userId
             })
 
             await createTask.save();
@@ -45,7 +47,8 @@ const createTask = async (req, res) => {
 
 const fetchAllTask = async (req, res) => {
     try {
-        const taskList = await tasks.find();
+       let userId = req.params.userId;
+        const taskList = await tasks.find({userId});
         return res.status(200).send({
             "status": "Success",
             "message": "Task List Fetched",

@@ -15,24 +15,17 @@ connectMongo()
 app.use(express.json())
 app.use(cookies())
 
-console.log('process.env.CLIENT_URL1',process.env.CLIENT_URL1);
-console.log('process.env.CLIENT_URL2',process.env.CLIENT_URL2);
-console.log('process.env.CLIENT_URL3',process.env.CLIENT_URL3);
-
 app.use(cors({
     origin: [
-        "https://task-manager-ui-eight.vercel.app",
-        "https://task-manager-api-tan.vercel.app",
-        "https://task-manager-qegtyr7ze-harivj18s-projects.vercel.app",
-        "https://task-manager-ui-git-main-harivj18s-projects.vercel.app"
+        process.env.CLIENT_URL1,
+        process.env.CLIENT_URL2,
+        process.env.CLIENT_URL3
     ],
     credentials: true
 }));
 app.use(bodyparser.json({limit: '15mb'}))
 
-app.get('/hari', (req, res) => {
-    res.write('Its working')
-})
+
 app.use('/taskManager/protectedRoutes',userRoutes)
 app.use('/taskManager/user', userRoutes);
 app.use('/taskManager/dashboard', dashboardRoutes);

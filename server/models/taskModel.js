@@ -12,7 +12,8 @@ const taskSchema = new mongoose.Schema({
         required: true
     },
     dueDate: {
-        type: String
+        type: String,
+        required: true
     },
     priority: { 
         type: String, 
@@ -31,6 +32,10 @@ const taskSchema = new mongoose.Schema({
     isImportantTask: {
         type: Boolean,
         default: false
+    },
+    userId: {
+        type: Number,
+        required: true
     }
 
 }, {
@@ -39,7 +44,7 @@ const taskSchema = new mongoose.Schema({
 
 taskSchema.pre("save", async function (next) {
     if (!this.taskNo) {
-        const count = await mongoose.model("tasks").countDocuments();
+        const count = await mongoose.model("tasks").countDocuments({ userId: this.userId })
         this.taskNo = count + 1;
     }
     next();
