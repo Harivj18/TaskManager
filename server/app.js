@@ -13,12 +13,18 @@ const port = process.env.PORT || 8100;
 
 app.use(bodyparser.json({limit: '15mb'}))
 app.use(cookies())
+console.log('process.env.CLIENT_URL1',process.env.CLIENT_URL1);
+console.log('process.env.CLIENT_URL2',process.env.CLIENT_URL2);
+console.log('process.env.CLIENT_URL3',process.env.CLIENT_URL3);
+
 app.use(cors({
     origin: [process.env.CLIENT_URL1, process.env.CLIENT_URL2, process.env.CLIENT_URL3 ],
     credentials: true
 }));
 
-
+app.get('/hari', (req, res) => {
+    res.write('Its working')
+})
 app.use('/taskManager/protectedRoutes',userRoutes)
 app.use('/taskManager/user', userRoutes);
 app.use('/taskManager/dashboard', dashboardRoutes);
