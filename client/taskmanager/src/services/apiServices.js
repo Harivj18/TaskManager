@@ -3,7 +3,7 @@ import axios from "axios";
 const ApiRequest = async (method, endpoint, data = {}, params = {}) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let apiURL = process.env.REACT_APP_SERVER_URL || "http://localhost:8080/taskManager";
+            let apiURL = process.env.REACT_APP_SERVER_URL || "https://task-manager-ui-eight.vercel.app";
 
             axios.defaults.withCredentials = true;
 

@@ -12,7 +12,7 @@ function AddTaskForm() {
     "taskDescription": "",
     "dueDate": "",
     "priority": "Low",
-    "status": "Open"
+    "status": "Open",
   })
   const [error, setError] = useState("");
 
@@ -23,7 +23,6 @@ function AddTaskForm() {
   const updateTaskInfo = (e) => {
     const name = e.target.name;
     let value = e.target.value
-
     setTaskInfo((currentValue) => { return { ...currentValue, [name]: value } })
   }
 
@@ -34,11 +33,17 @@ function AddTaskForm() {
       setError("Task Title is required.");
       return;
     }
+    if (!taskInfo.dueDate) {
+      setError("Due Date is required.");
+      return;
+    }
 
     setError(""); // Clear error if validation passes
     if (error === "") {
-
-      const addNewTask = await ApiRequest("POST", 'taskManager/dashboard/addTask', taskInfo)
+      const userId = localStorage.getItem("userId")
+      let updatedTaskInfo = {...taskInfo, userId}
+      
+      const addNewTask = await ApiRequest("POST", 'taskManager/dashboard/addTask', updatedTaskInfo)
       if (addNewTask['status'].toUpperCase() === "SUCCESS") {
 
         toast.success("Task Added Successfully !!", {
@@ -122,12 +127,13 @@ function AddTaskForm() {
             </select>
           </div>
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 font-semibold">Due Date </label>
+            <label className="block text-gray-700 dark:text-gray-300 font-semibold">Due Date <span className="text-red-500">*</span> </label>
             <input
               type="date"
               name="dueDate"
               value={taskInfo.dueDate}
               onChange={updateTaskInfo}
+              required
               min={new Date().toISOString().split("T")[0]} // Restricts past dates
               className="w-full border border-gray-300 dark:border-gray-600 rounded-md p-3 bg-gray-100 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-purple-500"
             />

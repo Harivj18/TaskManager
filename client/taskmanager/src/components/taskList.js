@@ -12,7 +12,9 @@ function TaskList({ filter, searchResult }) {
       setTaskInfo(searchResult);
     } else {
       const fetchTask = async () => {
-        const allTask = await ApiRequest("GET", "taskManager/dashboard/allTask");
+      const userId = localStorage.getItem("userId")
+
+        const allTask = await ApiRequest("GET", `taskManager/dashboard/allTask/${userId}`);
         if (allTask.status.toUpperCase() === "SUCCESS") {
           setTaskInfo(allTask.data);
         }

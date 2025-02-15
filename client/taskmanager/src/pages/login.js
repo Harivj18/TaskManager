@@ -4,19 +4,21 @@ import ApiRequest from "../services/apiServices";
 import { AuthContext } from "../context/authContext";
 import Spinner from "../components/spinner";
 import { toast } from "react-toastify";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-  const [userInfo, setUserInfo] = useState({
-    emailId: "",
-    password: "",
-  });
-
+  const [userInfo, setUserInfo] = useState({ emailId: "", password: "" });
   const [errors, setErrors] = useState({});
   const { setIsAuthenticated } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [loaderMsg, setLoaderMsg] = useState("Logging In ....");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const createAccount = () => {
     navigate("/signup");
@@ -51,8 +53,9 @@ const Login = () => {
 
     if (userLoginInfo.status.toUpperCase() === "SUCCESS") {
       setIsAuthenticated(true);
-      localStorage.setItem('userName', userLoginInfo.userName);
-      toast.success("User Login Successfull", {
+      localStorage.setItem("userName", userLoginInfo.userInfo.userName);
+      localStorage.setItem("userId", userLoginInfo.userInfo.userId);
+      toast.success("User Login Successful", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -102,18 +105,29 @@ const Login = () => {
             />
             {errors.emailId && <p className="text-red-500 text-sm">{errors.emailId}</p>}
           </div>
-          <div>
+
+          <div className="relative">
             <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input
-              type="password"
-              name="password"
-              value={userInfo.password}
-              onChange={updateUserDetails}
-              placeholder="Enter your password"
-              className="w-full px-4 py-3 mt-1 border rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-400"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={userInfo.password}
+                onChange={updateUserDetails}
+                placeholder="Enter your password"
+                className="w-full px-4 py-3 mt-1 border rounded-lg focus:ring focus:ring-blue-200 focus:border-blue-400 pr-12"
+              />
+              <button
+                type="button"
+                onClick={togglePasswordVisibility}
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-500 focus:outline-none"
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
             {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
           </div>
+
           <button
             type="submit"
             className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300"
@@ -121,6 +135,7 @@ const Login = () => {
             Login
           </button>
         </form>
+
         <p className="mt-4 text-sm text-center text-gray-600">
           Don't have an account?{" "}
           <button onClick={createAccount} className="text-blue-500 hover:underline">

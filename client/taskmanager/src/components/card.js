@@ -32,30 +32,30 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
     });
   };
 
+
   const dueDateObj = parseISO(dueDate);
   const isDueToday = isToday(dueDateObj);
   const isDueTomorrow = isTomorrow(dueDateObj);
-  const isOverdue = isPast(dueDateObj) && !isToday(dueDateObj); 
+  const isOverdue = isPast(dueDateObj) && !isToday(dueDateObj);
 
   const dueText = isOverdue
     ? "❗ Overdue"
     : isDueToday
-    ? "⚠️ Due Today"
-    : isDueTomorrow
-    ? "📅 Due Tomorrow"
-    : `🗓 ${format(dueDateObj, "yyyy-MM-dd")}`;
+      ? "⚠️ Due Today"
+      : isDueTomorrow
+        ? "📅 Due Tomorrow"
+        : `🗓 ${format(dueDateObj, "yyyy-MM-dd")}`;
 
   return (
     <div
       className={`relative p-6 rounded-2xl shadow-lg w-80 h-64 flex flex-col justify-between transition-transform transform hover:scale-105 
-        ${
-          isOverdue
-            ? "bg-red-700 text-white"
-            : isDueToday
+        ${isOverdue
+          ? "bg-red-700 text-white"
+          : isDueToday
             ? "bg-red-400 text-white"
             : status === "Completed"
-            ? "bg-purple-700 text-white"
-            : "bg-white dark:bg-gray-800 dark:text-white text-gray-900"
+              ? "bg-purple-700 text-white"
+              : "bg-white dark:bg-gray-800 dark:text-white text-gray-900"
         }
       `}
     >
@@ -80,7 +80,7 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
       </div>
 
 
-      <p className="text-sm text-gray-600 dark:text-gray-300 h-14 overflow-hidden line-clamp-2">
+      <p className="text-sm text-gray-400 dark:text-gray-400 h-14 overflow-hidden line-clamp-2 mt-3">
         {taskDescription}
       </p>
 
@@ -88,14 +88,13 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
       <div className="flex justify-between items-center text-sm mt-2">
         <span
           className={`text-sm font-medium px-2 py-1 rounded-lg 
-            ${
-              isOverdue
-                ? "bg-red-300 text-white"
-                : isDueToday
+            ${isOverdue
+              ? "bg-red-300 text-white"
+              : isDueToday
                 ? "bg-red-400 text-white"
                 : isDueTomorrow
-                ? "bg-yellow-400 text-black"
-                : "text-white-600 dark:text-gray-400"
+                  ? "bg-yellow-400 text-black"
+                  : "text-white-600 dark:text-gray-400"
             }
           `}
         >
@@ -113,9 +112,8 @@ function Card({ taskNo, taskTitle, taskDescription, dueDate, priority, status, i
 
       <div className="flex justify-between items-center mt-3">
         <button
-          className={`flex items-center gap-2 ${
-            status === "Completed" ? "text-white hover:text-gray-300" : "text-blue-600 hover:text-blue-700"
-          }`}
+          className={`flex items-center gap-2 ${status === "Completed" ? "text-white hover:text-gray-300" : "text-blue-600 hover:text-blue-700"
+            }`}
           onClick={onEditTask}
         >
           <FaEdit size={18} />

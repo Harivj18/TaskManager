@@ -37,7 +37,8 @@ function Dashboard() {
       const searchResult = await ApiRequest("GET", `taskManager/dashboard/getTask/${search.taskNo}`);
       setSearchResult([searchResult.data]);
     } else {
-      const searchResult = await ApiRequest("GET", `taskManager/taskManager/dashboard/allTask`);
+      const userId = localStorage.getItem("userId")
+      const searchResult = await ApiRequest("GET", `taskManager/dashboard/allTask/${userId}`);
       setSearchResult(searchResult.data);
     }
   };

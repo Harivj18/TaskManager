@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiRequest from "../services/apiServices";
+import { toast } from "react-toastify";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [userInfo, setUserInfo] = useState({
@@ -58,7 +60,26 @@ const Signup = () => {
 
     const userResponse = await ApiRequest("POST", "taskManager/user/signup", userInfo);
     if (userResponse?.status?.toUpperCase() === "SUCCESS") {
+      toast.success("Signup Successful! Redirecting to login...", {
+        position: "top-center",
+        autoClose: 3000,
+      });
       setTimeout(() => navigate("/login"), 1500);
+    } else if (userResponse?.message?.toLowerCase().includes("username already exists")) {
+      toast.error(
+        <div>
+          username already exists! <a href="/login" className="text-blue-500 underline">Login here</a>
+        </div>,
+        {
+          position: "top-center",
+          autoClose: 5000,
+        }
+      );
+    } else {
+      toast.error("Signup failed. Please try again later.", {
+        position: "top-center",
+        autoClose: 3000,
+      });
     }
   };
 
@@ -171,7 +192,7 @@ const Signup = () => {
               className="absolute top-10 right-4 cursor-pointer"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
             >
-              {showConfirmPassword ?  <FiEyeOff size={20} /> : <FiEye size={20} />}
+              {showConfirmPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </span>
             {errors.confirm_password && <p className="text-red-500 text-sm">{errors.confirm_password}</p>}
           </div>
@@ -179,6 +200,13 @@ const Signup = () => {
           <button type="submit" className="w-full py-3 text-white bg-blue-600 rounded-lg hover:bg-blue-700">
             Sign Up
           </button>
+
+          <p className="mt-4 text-sm text-center text-gray-600">
+            Already have an account ?{" "}
+            <button onClick={loginUser} className="text-blue-500 hover:underline">
+              Sign in
+            </button>
+          </p>
         </form>
       </div>
     </div>
